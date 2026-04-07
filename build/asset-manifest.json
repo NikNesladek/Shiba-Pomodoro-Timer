@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0c950c09.css",
+    "main.js": "/static/js/main.bc9d468c.js",
+    "static/media/shiba.png": "/static/media/shiba.3e1521db656022417fdc.png",
+    "index.html": "/index.html",
+    "main.0c950c09.css.map": "/static/css/main.0c950c09.css.map",
+    "main.bc9d468c.js.map": "/static/js/main.bc9d468c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0c950c09.css",
+    "static/js/main.bc9d468c.js"
+  ]
+}

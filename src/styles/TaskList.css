@@ -1,0 +1,138 @@
+.task-list {
+  width: min(560px, calc(100% - 32px));
+  margin: 32px auto 0;
+  padding: 24px;
+  border: 1px solid rgba(198, 216, 244, 0.32);
+  border-radius: 16px;
+  background: rgba(29, 45, 78, 0.34);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.task-list--editable {
+  width: 100%;
+  margin: 0;
+}
+
+.task-list__header h2 {
+  margin-bottom: 8px;
+  font-size: 1.5rem;
+}
+
+.task-list__header p {
+  margin: 0;
+  color: #cfcfcf;
+}
+
+.task-list__form {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.task-list__input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #3b3b3b;
+  border-radius: 10px;
+  background: #2c3e62;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.task-list__input:focus {
+  outline: 2px solid #4f8fdb;
+  outline-offset: 2px;
+}
+
+.task-list__add-button,
+.task-list__remove-button {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.task-list__add-button {
+  padding: 12px 18px;
+  background: #4f8fdb;
+  color: #fff;
+}
+
+.task-list__add-button:hover {
+  background: #3f7fc9;
+}
+
+.task-list__empty {
+  margin: 20px 0 0;
+  color: #b0b0b0;
+}
+
+.task-list__items {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.task-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #272727;
+}
+
+.task-list__item:last-child {
+  border-bottom: none;
+}
+
+.task-list__label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  text-align: left;
+}
+
+.task-list__label input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.task-list__text {
+  word-break: break-word;
+}
+
+.task-list__text--completed {
+  color: #8f8f8f;
+  text-decoration: line-through;
+}
+
+.task-list__remove-button {
+  padding: 8px 12px;
+  background: #2b2b2b;
+  color: #f3f3f3;
+}
+
+.task-list__remove-button:hover {
+  background: #3a3a3a;
+}
+
+@media (max-width: 640px) {
+  .task-list {
+    padding: 20px;
+  }
+
+  .task-list__form,
+  .task-list__item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-list__remove-button,
+  .task-list__add-button {
+    width: 100%;
+  }
+}

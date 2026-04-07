@@ -1,7 +1,13 @@
 .pomodoro-timer {
-    text-align: center;
-    margin: 20px;
-  }
+  text-align: center;
+  margin: 20px;
+}
+
+.pomodoro-timer--editable {
+  margin: 0;
+  padding: 10px 24px 28px;
+  box-sizing: border-box;
+}
   
   .pomodoro-timer h1 {
     font-size: 2rem;
@@ -13,16 +19,34 @@
     margin: 20px 0;
   }
   
-  .pomodoro-timer button {
-    background-color: #61dafb;
+  .pomodoro-button {
+    background-color: #4f8fdb;
     border: none;
     border-radius: 5px;
     color: white;
     padding: 10px 20px;
-    margin: 5px;
     cursor: pointer;
-  }
-  
-  .pomodoro-timer button:hover {
-    background-color: #21a1f1;
-  }
+}
+
+.pomodoro-button:hover {
+    background-color: #3f7fc9;
+}
+
+.pomodoro-button + .pomodoro-button {
+  margin-left: 8px;
+}
+
+.pomodoro-actions {
+  margin-top: 16px;
+}
+
+.pomodoro-timer--editable .pomodoro-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pomodoro-timer--editable .pomodoro-button + .pomodoro-button {
+  margin-left: 0;
+}

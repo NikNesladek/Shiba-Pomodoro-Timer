@@ -3,7 +3,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../styles/PomodoroTimer.css';
 import 'react-circular-progressbar/dist/styles.css';
 
-function PomodoroTimer() {
+function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -43,7 +43,6 @@ function PomodoroTimer() {
             setSeconds(59);
           } else {
             clearInterval(interval);
-            setIsActive(false);
             
             // Switch between work and break sessions
             if (isWorkSession) {
@@ -55,20 +54,31 @@ function PomodoroTimer() {
               if (newWorkSessionCount % 4 === 0) {
                 // After 4 work sessions, take a long break (20 minutes)
                 setMinutes(20);
+                setIsActive(true); // Auto-start long break
                 playSound(600, 1000); // Longer sound for long break
-                setTimeout(() => playSound(600, 500),500);
+                setTimeout(() => playSound(600, 500), 500);
               } else {
-                // Short break (5 minutes)
+                // Short break (5 minutes) - auto start
                 setMinutes(5);
+                setIsActive(true); // Continue timer automatically
                 playSound(600, 500);
                 setTimeout(() => playSound(600, 500),500);
               }
             } else {
-              // Break session just completed, start work session
+              // Break session just completed
+              const wasLongBreak = (workSessionCount % 4 === 0 && workSessionCount > 0);
+              
               setMinutes(25);
               setIsWorkSession(true);
+              
+              if (wasLongBreak) {
+                setIsActive(false); // Manual start required after long break
+              } else {
+                setIsActive(true); // Auto-start after short break
+              }
+              
               playSound(1500, 500);
-              setTimeout(() => playSound(1000, 500),500)
+              setTimeout(() => playSound(1000, 500), 500);
             }
           }
         }
@@ -118,8 +128,11 @@ function PomodoroTimer() {
 
   // Calculate the size of the circular progress bar based on the window width
   const maxSize = 500;
-  const minSize = 50;
-  const calculatedSize = Math.max(minSize, Math.min(maxSize, windowWidth * 0.2));
+  const minSize = 140;
+  const responsiveSize = Math.max(minSize, Math.min(maxSize, windowWidth * 0.2));
+  const editableSize = panelWidth ? Math.max(180, Math.min(320, (panelWidth - 48) * 0.68)) : responsiveSize;
+  const calculatedSize = isLayoutEditMode ? editableSize : responsiveSize;
+  const timerWidth = isLayoutEditMode ? '100%' : calculatedSize * 1.5;
 
   // Set color based on session type
   let pathColor;
@@ -143,16 +156,14 @@ function PomodoroTimer() {
   };
 
   return (
-    <div className="pomodoro-timer" style={{ 
-      width: calculatedSize*1.5,
-      }}>
+    <div className={isLayoutEditMode ? 'pomodoro-timer pomodoro-timer--editable' : 'pomodoro-timer'} style={{ width: timerWidth }}>
       <CircularProgressbar
         value={percentage}
         text={`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
         styles={buildStyles({
           textColor: '#fff',
           pathColor: pathColor,
-          trailColor: '#333',
+          trailColor: '#2c3e62',
           strokeLinecap: 'butt',
           textSize: `${calculatedSize / 25}px`,
           root: {
@@ -167,8 +178,10 @@ function PomodoroTimer() {
       <div style={{ marginTop: '5px', color: '#fff', fontSize: '12px' }}>
         Completed work sessions: {workSessionCount}
       </div>
-      <button onClick={toggleTimer}>{isActive ? 'Pause' : 'Start'}</button>
-      <button onClick={resetTimer}>Reset</button>
+      <div className="pomodoro-actions">
+        <button className="pomodoro-button" onClick={toggleTimer}>{isActive ? 'Pause' : 'Start'}</button>
+        <button className="pomodoro-button" onClick={resetTimer}>Reset</button>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,39 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: black;
+    position: relative;
+    overflow: hidden;
+    background-color: #b4c6e2;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: min(42vw, 460px);
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url('/shiba.png');
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: contain;
+    opacity: 0.96;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: min(42vw, 460px);
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+    z-index: 0;
+    background:
+        linear-gradient(to right, rgba(180, 198, 226, 0) 0%, rgba(180, 198, 226, 0) 42%, rgba(180, 198, 226, 0.78) 72%, #b4c6e2 100%),
+        linear-gradient(to top, rgba(180, 198, 226, 0) 0%, rgba(180, 198, 226, 0) 36%, rgba(180, 198, 226, 0.72) 70%, #b4c6e2 100%);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -31,7 +63,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .button {
-    background-color: #61dafb;
+    background-color: #4f8fdb;
     border: none;
     border-radius: 5px;
     color: white;
@@ -40,21 +72,93 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .button:hover {
-    background-color: #21a1f1;
+    background-color: #3f7fc9;
 }
 
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 0 0 18px;
 }
 
 .App-header {
-  background-color: black;
+    background-color: #2c3e62;
   color: white;
   padding: 20px;
   border-radius: 8px;
 }
 
+.app-layout-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 8px 20px 0;
+}
+
+.app-layout-controls__button {
+    border: 1px solid #2f2f2f;
+    border-radius: 999px;
+    padding: 9px 14px;
+    background: #161616;
+    color: #d8d8d8;
+    cursor: pointer;
+}
+
+.app-layout-controls__button:hover:enabled {
+    border-color: #555;
+    color: #fff;
+}
+
+.app-layout-controls__button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.app-layout-controls__button--active {
+    border-color: rgba(156, 97, 251, 0.7);
+    color: #fff;
+    background: rgba(156, 97, 251, 0.18);
+}
+
+.app-layout-controls__hint {
+    color: #9d9d9d;
+    font-size: 0.9rem;
+}
+
+.app-layout-stack {
+    width: min(1200px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+.app-layout-stack__timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-layout-canvas {
+    position: relative;
+    margin: 14px auto 0;
+    border: 1px solid rgba(66, 89, 130, 0.42);
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08)),
+        radial-gradient(circle at top, rgba(87, 113, 156, 0.2), transparent 36%),
+        rgba(129, 152, 191, 0.44);
+    overflow: hidden;
+}
+
 p{
   color: white;
+}
+
+@media (max-width: 767px) {
+    .app-layout-controls {
+        padding-inline: 16px;
+    }
 }

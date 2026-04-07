@@ -1,0 +1,54 @@
+.editable-panel {
+  position: relative;
+}
+
+.editable-panel--positioned {
+  position: absolute;
+}
+
+.editable-panel--edit-mode {
+  box-sizing: border-box;
+  border: 1px dashed rgba(86, 114, 161, 0.65);
+  border-radius: 20px;
+  background: rgba(193, 210, 237, 0.2);
+  box-shadow: 0 12px 28px rgba(22, 37, 71, 0.2);
+}
+
+.editable-panel__chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 0;
+  cursor: move;
+  user-select: none;
+}
+
+.editable-panel__title,
+.editable-panel__hint {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(230, 238, 252, 0.86);
+}
+
+.editable-panel__body {
+  height: 100%;
+}
+
+.editable-panel__resize-handle {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-right: 2px solid rgba(231, 240, 255, 0.86);
+  border-bottom: 2px solid rgba(231, 240, 255, 0.86);
+  background: transparent;
+  cursor: nwse-resize;
+}
+
+.editable-panel__resize-handle:hover {
+  border-right-color: rgba(255, 255, 255, 1);
+  border-bottom-color: rgba(255, 255, 255, 1);
+}
