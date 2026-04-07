@@ -2,6 +2,12 @@
 
 This is a simple React application that serves as a starting point for building web applications. 
 
+## Live Deployment
+
+This project is configured for GitHub Pages deployment at:
+
+https://niknesladek.github.io/Shiba-Pomodoro-Timer
+
 ## Getting Started
 
 To get a copy of this project up and running on your local machine, follow these steps:
@@ -17,12 +23,12 @@ Make sure you have the following installed:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/my-react-app.git
+   git clone https://github.com/NikNesladek/Shiba-Pomodoro-Timer.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd my-react-app
+   cd Shiba-Pomodoro-Timer
    ```
 
 3. Install the dependencies:
@@ -47,6 +53,23 @@ npm run build
 ```
 
 This will generate a `build` folder containing the optimized application.
+
+### Deploying to GitHub Pages
+
+This project uses the `gh-pages` package for deployment.
+
+To publish the latest version:
+
+```
+npm run deploy
+```
+
+This command will:
+
+1. Build the app
+2. Publish the `build` directory to the `gh-pages` branch
+
+After the first deploy, make sure GitHub Pages is configured in the repository settings to serve from the `gh-pages` branch.
 
 ### Contributing
 

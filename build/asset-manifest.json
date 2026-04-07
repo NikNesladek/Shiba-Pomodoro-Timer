@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.0c950c09.css",
-    "main.js": "/static/js/main.bc9d468c.js",
-    "static/media/shiba.png": "/static/media/shiba.3e1521db656022417fdc.png",
-    "index.html": "/index.html",
-    "main.0c950c09.css.map": "/static/css/main.0c950c09.css.map",
-    "main.bc9d468c.js.map": "/static/js/main.bc9d468c.js.map"
+    "main.css": "/Shiba-Pomodoro-Timer/static/css/main.cd5caabe.css",
+    "main.js": "/Shiba-Pomodoro-Timer/static/js/main.2677f211.js",
+    "static/media/shiba.png": "/Shiba-Pomodoro-Timer/static/media/shiba.3e1521db656022417fdc.png",
+    "index.html": "/Shiba-Pomodoro-Timer/index.html",
+    "main.cd5caabe.css.map": "/Shiba-Pomodoro-Timer/static/css/main.cd5caabe.css.map",
+    "main.2677f211.js.map": "/Shiba-Pomodoro-Timer/static/js/main.2677f211.js.map"
   },
   "entrypoints": [
-    "static/css/main.0c950c09.css",
-    "static/js/main.bc9d468c.js"
+    "static/css/main.cd5caabe.css",
+    "static/js/main.2677f211.js"
   ]
 }
