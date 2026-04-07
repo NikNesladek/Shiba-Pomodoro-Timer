@@ -56,20 +56,14 @@ This will generate a `build` folder containing the optimized application.
 
 ### Deploying to GitHub Pages
 
-This project uses the `gh-pages` package for deployment.
+This project deploys automatically with GitHub Actions.
 
-To publish the latest version:
+When changes are pushed to the `main` branch, the workflow at `.github/workflows/deploy-pages.yml` builds and publishes the app to GitHub Pages.
 
-```
-npm run deploy
-```
+Before this works, ensure GitHub is configured to use Actions for Pages:
 
-This command will:
-
-1. Build the app
-2. Publish the `build` directory to the `gh-pages` branch
-
-After the first deploy, make sure GitHub Pages is configured in the repository settings to serve from the `gh-pages` branch.
+1. Open repository `Settings > Pages`
+2. Set `Source` to `GitHub Actions`
 
 ### Contributing
 
