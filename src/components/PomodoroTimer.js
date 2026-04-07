@@ -137,11 +137,9 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
   // Set color based on session type
   let pathColor;
   if (isWorkSession) {
-    pathColor = 'purple'; // Work session
-  } else if (workSessionCount % 4 === 0 && workSessionCount > 0) {
-    pathColor = 'orange'; // Long break
+    pathColor = '#7bb4ff'; // Work session
   } else {
-    pathColor = 'green'; // Short break
+    pathColor = '#e3a06b'; // Break sessions
   }
 
   // Get session type text
