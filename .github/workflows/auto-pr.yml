@@ -1,0 +1,30 @@
+name: Auto-create PR on branch push
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: ${{ github.ref_name }}
+          body: |
+            Automated PR for branch `${{ github.ref_name }}`.
+
+            Pushed by @${{ github.actor }}.
+          base: main
+          branch: ${{ github.ref_name }}
+          draft: true
