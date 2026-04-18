@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/Shiba-Pomodoro-Timer/static/css/main.cd5caabe.css",
-    "main.js": "/Shiba-Pomodoro-Timer/static/js/main.2677f211.js",
+    "main.css": "/Shiba-Pomodoro-Timer/static/css/main.d93a9e45.css",
+    "main.js": "/Shiba-Pomodoro-Timer/static/js/main.e6c8c531.js",
     "static/media/shiba.png": "/Shiba-Pomodoro-Timer/static/media/shiba.3e1521db656022417fdc.png",
     "index.html": "/Shiba-Pomodoro-Timer/index.html",
-    "main.cd5caabe.css.map": "/Shiba-Pomodoro-Timer/static/css/main.cd5caabe.css.map",
-    "main.2677f211.js.map": "/Shiba-Pomodoro-Timer/static/js/main.2677f211.js.map"
+    "main.d93a9e45.css.map": "/Shiba-Pomodoro-Timer/static/css/main.d93a9e45.css.map",
+    "main.e6c8c531.js.map": "/Shiba-Pomodoro-Timer/static/js/main.e6c8c531.js.map"
   },
   "entrypoints": [
-    "static/css/main.cd5caabe.css",
-    "static/js/main.2677f211.js"
+    "static/css/main.d93a9e45.css",
+    "static/js/main.e6c8c531.js"
   ]
 }

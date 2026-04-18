@@ -42,7 +42,7 @@ function App() {
           <button className="app-header__info" type="button" aria-label="What is a Pomodoro timer?">
             i
             <span className="app-header__tooltip" role="tooltip">
-              A Pomodoro timer breaks work into focused 25-minute sessions with short breaks to help you stay productive. Standard sessions are 25 minutes of work followed by a 5-minute break, and after every 4 work sessions, you get a longer 20-minute break.
+              This timer cycles through 20 minutes of focus, then 5 minutes of summary time, then a normal 5-minute break to help you reset before the next session.
             </span>
           </button>
         </div>

@@ -3,16 +3,21 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import '../styles/PomodoroTimer.css';
 import 'react-circular-progressbar/dist/styles.css';
 
+const SESSION_LENGTHS = {
+  focus: 20,
+  summary: 5,
+  break: 5,
+};
+
 function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
-  const [minutes, setMinutes] = useState(25);
+  const [minutes, setMinutes] = useState(SESSION_LENGTHS.focus);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const [isWorkSession, setIsWorkSession] = useState(true);
-  const [workSessionCount, setWorkSessionCount] = useState(0); // Track completed work sessions
+  const [sessionType, setSessionType] = useState('focus');
+  const [focusSessionCount, setFocusSessionCount] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Function to play a sound
-  const playSound = (frequency = 800, duration = 200) => {
+  const playSound = (frequency = 900, duration = 140) => {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
@@ -23,7 +28,7 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
     oscillator.frequency.value = frequency;
     oscillator.type = 'sine';
     
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0.18, audioContext.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
     
     oscillator.start(audioContext.currentTime);
@@ -44,41 +49,22 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
           } else {
             clearInterval(interval);
             
-            // Switch between work and break sessions
-            if (isWorkSession) {
-              // Work session just completed
-              const newWorkSessionCount = workSessionCount + 1;
-              setWorkSessionCount(newWorkSessionCount);
-              setIsWorkSession(false);
-              
-              if (newWorkSessionCount % 4 === 0) {
-                // After 4 work sessions, take a long break (20 minutes)
-                setMinutes(20);
-                setIsActive(true); // Auto-start long break
-                playSound(600, 1000); // Longer sound for long break
-                setTimeout(() => playSound(600, 500), 500);
-              } else {
-                // Short break (5 minutes) - auto start
-                setMinutes(5);
-                setIsActive(true); // Continue timer automatically
-                playSound(600, 500);
-                setTimeout(() => playSound(600, 500),500);
-              }
+            if (sessionType === 'focus') {
+              setFocusSessionCount((count) => count + 1);
+              setSessionType('summary');
+              setMinutes(SESSION_LENGTHS.summary);
+              setIsActive(true);
+              playSound(720, 150);
+            } else if (sessionType === 'summary') {
+              setSessionType('break');
+              setMinutes(SESSION_LENGTHS.break);
+              setIsActive(true);
+              playSound(680, 150);
             } else {
-              // Break session just completed
-              const wasLongBreak = (workSessionCount % 4 === 0 && workSessionCount > 0);
-              
-              setMinutes(25);
-              setIsWorkSession(true);
-              
-              if (wasLongBreak) {
-                setIsActive(false); // Manual start required after long break
-              } else {
-                setIsActive(true); // Auto-start after short break
-              }
-              
-              playSound(1500, 500);
-              setTimeout(() => playSound(1000, 500), 500);
+              setSessionType('focus');
+              setMinutes(SESSION_LENGTHS.focus);
+              setIsActive(true);
+              playSound(980, 150);
             }
           }
         }
@@ -88,7 +74,7 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, minutes, seconds, isWorkSession, workSessionCount]);
+  }, [isActive, minutes, seconds, sessionType]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -108,21 +94,14 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
 
   const resetTimer = () => {
     setIsActive(false);
-    setMinutes(25);
+    setMinutes(SESSION_LENGTHS.focus);
     setSeconds(0);
-    setIsWorkSession(true);
-    setWorkSessionCount(0); // Reset work session count
+    setSessionType('focus');
+    setFocusSessionCount(0);
   };
 
   const totalSeconds = minutes * 60 + seconds;
-  let sessionDuration;
-  
-  if (isWorkSession) {
-    sessionDuration = 25 * 60; // 25 minutes for work
-  } else {
-    // Check if this is a long break (after 4 work sessions)
-    sessionDuration = (workSessionCount % 4 === 0 && workSessionCount > 0) ? 20 * 60 : 5 * 60;
-  }
+  const sessionDuration = SESSION_LENGTHS[sessionType] * 60;
   
   const percentage = ((sessionDuration - totalSeconds) / sessionDuration) * 100;
 
@@ -134,23 +113,16 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
   const calculatedSize = isLayoutEditMode ? editableSize : responsiveSize;
   const timerWidth = isLayoutEditMode ? '100%' : calculatedSize * 1.5;
 
-  // Set color based on session type
-  let pathColor;
-  if (isWorkSession) {
-    pathColor = '#7bb4ff'; // Work session
-  } else {
-    pathColor = '#e3a06b'; // Break sessions
-  }
+  const pathColorBySession = {
+    focus: '#7bb4ff',
+    summary: '#f2c14e',
+    break: '#e3a06b',
+  };
 
-  // Get session type text
   const getSessionText = () => {
-    if (isWorkSession) {
-      return `Work Session ${(workSessionCount % 4) + 1}/4`;
-    } else if (workSessionCount % 4 === 0 && workSessionCount > 0) {
-      return 'Long Break (20 min)';
-    } else {
-      return 'Short Break (5 min)';
-    }
+    if (sessionType === 'focus') return 'Focus (20 min)';
+    if (sessionType === 'summary') return 'Summary (5 min)';
+    return 'Break (5 min)';
   };
 
   return (
@@ -160,7 +132,7 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
         text={`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`}
         styles={buildStyles({
           textColor: '#fff',
-          pathColor: pathColor,
+          pathColor: pathColorBySession[sessionType],
           trailColor: '#2c3e62',
           strokeLinecap: 'butt',
           textSize: `${calculatedSize / 25}px`,
@@ -174,7 +146,7 @@ function PomodoroTimer({ panelWidth, isLayoutEditMode = false }) {
         {getSessionText()}
       </div>
       <div style={{ marginTop: '5px', color: '#fff', fontSize: '12px' }}>
-        Completed work sessions: {workSessionCount}
+        Completed focus sessions: {focusSessionCount}
       </div>
       <div className="pomodoro-actions">
         <button className="pomodoro-button" onClick={toggleTimer}>{isActive ? 'Pause' : 'Start'}</button>
